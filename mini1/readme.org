@@ -176,7 +176,7 @@ Side view
 Front view
 [[./images/NH3_front.png]]
 
-From the front view, there is a bulge in the electron density above the central atom which is N (dark red) that has a lone pair of electrons.
+From the front view, there is a bulge in the electron density above the central N-atom (dark red) that has a lone pair of electrons.
 
 **** C6H6 (Benzene)
 
@@ -235,7 +235,7 @@ Side view
 Front view
 [[./images/C2H6_front.png]]
 
-Comparison between images of C2H2, C2H4 and C2H6 showed a higher electron density between the carbon pair for C2H2 and C2H4 than for C2H6.  This is due to the presence of the double and triple bond.
+Comparison between images of C2H2, C2H4 and C2H6 shows a higher electron density between the carbon pair for C2H2 and C2H4 than for C2H6.  This is due to the presence of the double and triple bond.
 
 **** C2H6 (Not Centered)
 
@@ -284,7 +284,7 @@ Front view
 
 *** Periodic structures
 
-The periodic nature of these cells results in plots of electron density not being itself enclosed but spread across the cell boundary.
+These periodicity of these cells result in plots of electron density not being self-contained but spreads across the cell boundary.
 
 **** Ta (BCC Metal)
 
@@ -300,7 +300,7 @@ Side view
 Front view
 [[./images/Ta_front.png]]
 
-The electron cloud tends to cluster near to the center and vertices of the cell as compared to a FCC structure as shown below for TaC.
+The electron cloud tends to cluster near to the center and vertices of the cell in constrast to the rock-salt structure of TaC shown below.
 
 **** Graphite (Planar hexagonal)
 
@@ -316,7 +316,7 @@ Side view
 Front view
 [[./images/cGraph_front.png]]
 
-The electron density is separated into distinct layers similar to the physical atomic arrangement in graphite.
+The electron density is separated into distinct layers, similar to the physical atomic arrangement in graphite.
 
 **** TaC (rock-salt structure)
 
@@ -332,4 +332,4 @@ Side view
 Front view
 [[./images/TaC_front.png]]
 
-There are more "hollow" regions enclosed within the simulation cell in this rock-salt structure  as compared to the BCC Ta.  A possible reason is the physical density and arrangement of the atoms in FCC differ from BCC, pulling electrons closer around each atom.
+There are more "hollow" regions enclosed within the simulation cell in this rock-salt structure  as compared to the BCC Ta.  The number density and arrangement of the atoms in this structure differ from BCC, pulling electrons closer around each atom.
