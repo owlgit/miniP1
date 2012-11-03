@@ -1,0 +1,335 @@
+* Mini Project 1
+
+** Problem
+There are many ways to visualize the electron density.  One way is to plot it as a "fog" or cloud-like where the colormap represents the charge density of the electron cloud in a compound.
+
+** Method
+The "fog" is plotted using in-built functions of mayavi, jasp, and some short scripts written to grab data from the OUTCAR and CHG files produced by VASP.  In the attached plots, the deeper the red color, the higher is the charge density.
+
+** Files
+Two scripts are written:
+
+
+1. mini\_v2.org
+
+
+This includes the jasp commands to retrieve the VASP outputs, function calls to retrieve additional data, and the actual plotting.
+
+
+The structure of this file:
+
+
+a. Inputs.
+
+
+b. Use of jasp to retrieve data from VASP output files.
+
+
+c. Read CHG to get position of the atoms and plot them.
+
+
+d. Read OUTCAR to get linkages and plot them if needed.
+
+
+e. Plot simulation cell boundary if needed.
+
+
+f. Plot the electron charge density.
+
+
+g. Save the figure. (Default: Isometric view but other relevant views can be saved)
+
+******************************
+
+2. getPosLink.py
+
+
+This includes three functions:
+
+
+a. getPos(pFile)
+
+
+Read data from CHG to get the actual positions output from VASP.  This is to facilitate the plotting of the connectivity between the atoms.  The same coordinates can be read from CHGCAR, POSCAR and OUTCAR.  Alternatively, we can also use ase-sort.data in the output folder of VASP to sort the atom positions in the output files from VASP and ase commands.  Using ase commands alone to get atom positions to get the atom positions may return wrong atom ids resulting in wrong linkages between these atoms.
+
+This script returns the coordinates of all the atoms, number of different elements, total number of atoms, number of atoms in each element.
+
+
+b. isStringInt(s)
+
+
+To determine if the string is an integer or not.
+
+
+This script returns True/False
+
+
+c. getLinks(lName, ttlAtoms)
+
+
+Find the nearest neighbour list in OUTCAR and return the paired indices of the connected atoms.
+
+** How to use
+Steps to use this code:
+
+
+a. Copy the 2 files listed above (mini\_v2.org and getPosLink.py) into a new folder created in a machine that has jasp.
+
+
+b. Copy the output folder containing the output files from VASP calculation into this new folder
+
+
+c. In the mini\_v2.org,
+
+
+      i.   Put in the name of this output folder in variable calDir (e.g., calDir = 'h2o').
+
+      ii.  Indicate if u want to plot the linkage between atoms and the simulation cell boundary.
+
+      iii. It is ready to go.
+
+(attached in the folder is a sample output folder from VASP for h2o molecule)
+
+*** Example of input needed (reproduced from mini\_v2.org)
+
+#### Inputs required from user from HERE ######
+
+dirCal = 'h2o'
+
+#1 to plot linkage between atoms (for simple molecules), 0 otherwise
+
+plotLinks = 1
+
+
+#1 to plot cell boundary, 0 otherwise
+
+plotCell= 0
+
+#########    To HERE   ###################
+
+** Limitations
+No known limitation for the plotting of electron density except the need for jasp and other softwares/libraries imported in mini\_v2.org and getPosLink.py.  Simple molecules, periodic crystal structures, non-symmetrical and non-cubic lattices, and unit cell with a molecule that was not centered were tested.
+
+
+The only limitation comes from the plotting of linkages between atoms.  This is done based on the nearest neighbour list in OUTCAR.  It does not know and cannot plot the presence of multiple bonds between atom pairs (e.g., double or triple bond in C2H4 and C2H2)
+
+
+The color of each atom is arbitrary.  Atoms are of the same size in the  plots below but can be scaled arbitrary.
+
+** Images of electron density for several materials
+
+The single molecule images are generated using ENCUT = 300 except otherwise stated.  The periodic structures are generated with converged ENCUT and K-PTS.
+
+*** Single molecules
+**** H2O
+Top view
+[[./images/h2o_top.png]]
+
+Iso view
+[[./images/h2o_iso.png]]
+
+Side view
+[[./images/h2o_side.png]]
+
+Front view
+[[./images/h2o_front.png]]
+
+**** H2O (with different ENCUT)
+
+[[./images/h2o-100_iso.png]]
+
+ENCUT = 100
+
+[[./images/h2o-400_iso.png]]
+
+ENCUT = 400
+
+There is a difference in the electron density.  The difference itself is not shown in a single plot as the electron density grid for ENCUT = 400 is more finely divided than ENCUT = 100.  This creates a need to interpolate between the points for ENCUT = 100 to get an equal sized matrix.  From these two plots, the electron density spans a larger area at smaller ENCUT and has a higher density at a certain region around the molecule.
+
+**** CH3COF (4 elements)
+
+Top view
+[[./images/CH3COF_top.png]]
+
+Iso view
+[[./images/CH3COF_iso.png]]
+
+Side view
+[[./images/CH3COF_side.png]]
+
+Front view
+[[./images/CH3COF_front.png]]
+
+There is a localisation of the electron density around the F and O atoms (yellow and white spheres) as they are more electronegtive.
+
+**** NH3 (Lone pair of electrons)
+
+Top view
+[[./images/NH3_top.png]]
+
+Iso view
+[[./images/NH3_iso.png]]
+
+Side view
+[[./images/NH3_side.png]]
+
+Front view
+[[./images/NH3_front.png]]
+
+From the front view, there is a bulge in the electron density above the central atom which is N (dark red) that has a lone pair of electrons.
+
+**** C6H6 (Benzene)
+
+Top view
+[[./images/C6H6_top.png]]
+
+Iso view
+[[./images/C6H6_iso.png]]
+
+Side view
+[[./images/C6H6_side.png]]
+
+Front view
+[[./images/C6H6_front.png]]
+
+There is a concentration of electron density along the carbon backbone forming a ring. A lack of electron density in the center is observed.  This mirrors the bonding nature in benzene.
+
+**** C2H2 (Triple Bond in carbon chain)
+
+Top view
+[[./images/C2H2_top.png]]
+
+Iso view
+[[./images/C2H2_iso.png]]
+
+Side view
+[[./images/C2H2_side.png]]
+
+Front view
+[[./images/C2H2_front.png]]
+
+**** C2H4 (Double Bond in carbon chain)
+
+Top view
+[[./images/C2H4_top.png]]
+
+Iso view
+[[./images/C2H4_iso.png]]
+
+Side view
+[[./images/C2H4_side.png]]
+
+Front view
+[[./images/C2H4_front.png]]
+
+**** C2H6 (Single Bond in carbon chain)
+Top view
+[[./images/C2H6_top.png]]
+
+Iso view
+[[./images/C2H6_iso.png]]
+
+Side view
+[[./images/C2H6_side.png]]
+
+Front view
+[[./images/C2H6_front.png]]
+
+Comparison between images of C2H2, C2H4 and C2H6 showed a higher electron density between the carbon pair for C2H2 and C2H4 than for C2H6.  This is due to the presence of the double and triple bond.
+
+**** C2H6 (Not Centered)
+
+Top view
+[[./images/C2H6-notCenter_top.png]]
+
+Iso view
+[[./images/C2H6-notCenter_iso.png]]
+
+Side view
+[[./images/C2H6-notCenter_side.png]]
+
+Front view
+[[./images/C2H6-notCenter_front.png]]
+
+**** CO2
+
+Top view
+[[./images/co2_top.png]]
+
+Iso view
+[[./images/co2_iso.png]]
+
+Side view
+[[./images/co2_side.png]]
+
+Front view
+[[./images/co2_front.png]]
+
+
+**** CO2 (Non-uniform simulation cubic cell)
+
+Top view
+[[./images/co2-diffsize_top.png]]
+
+Iso view
+[[./images/co2-diffsize_iso.png]]
+
+Side view
+[[./images/co2-diffsize_side.png]]
+
+Front view
+[[./images/co2-diffsize_front.png]]
+
+
+
+*** Periodic structures
+
+The periodic nature of these cells results in plots of electron density not being itself enclosed but spread across the cell boundary.
+
+**** Ta (BCC Metal)
+
+Top view
+[[./images/Ta_top.png]]
+
+Iso view
+[[./images/Ta_iso.png]]
+
+Side view
+[[./images/Ta_side.png]]
+
+Front view
+[[./images/Ta_front.png]]
+
+The electron cloud tends to cluster near to the center and vertices of the cell as compared to a FCC structure as shown below for TaC.
+
+**** Graphite (Planar hexagonal)
+
+Top view
+[[./images/cGraph_top.png]]
+
+Iso view
+[[./images/cGraph_iso.png]]
+
+Side view
+[[./images/cGraph_side.png]]
+
+Front view
+[[./images/cGraph_front.png]]
+
+The electron density is separated into distinct layers similar to the physical atomic arrangement in graphite.
+
+**** TaC (rock-salt structure)
+
+Top view
+[[./images/TaC_top.png]]
+
+Iso view
+[[./images/TaC_iso.png]]
+
+Side view
+[[./images/TaC_side.png]]
+
+Front view
+[[./images/TaC_front.png]]
+
+There are more "hollow" regions enclosed within the simulation cell in this rock-salt structure  as compared to the BCC Ta.  A possible reason is the physical density and arrangement of the atoms in FCC differ from BCC, pulling electrons closer around each atom.
